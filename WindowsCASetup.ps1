@@ -62,7 +62,7 @@ function ConfigureJava() {
     $scoop_base_dir = "~/scoop/apps/"
     
     if (Test-Path $scoop_base_dir) {
-        $scoop_javas = Get-ChildItem -Recurse -Path $scoop_base_dir -Depth 3 -Filter java.exe -File -Name | Select-String "current"
+        $scoop_javas = Get-ChildItem -Recurse -Path $scoop_base_dir -Depth 7 -Filter java.exe -File -Name | Select-String "current"
 
         for($i = 0; $i -le ($scoop_javas.count - 1); $i += 1) {
             $java_location = (get-item ($scoop_base_dir + $scoop_javas[$i])).Directory.Parent.FullName
