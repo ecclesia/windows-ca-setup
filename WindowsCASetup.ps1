@@ -36,7 +36,7 @@ function ConfigureCurl() {
 
 function ConfigureGit() {
     if (Get-Command "git" -ErrorAction SilentlyContinue) {
-        Write-Output "Git wird konfiguriert: http.sslBackend schannel"
+        Write-Output "Git wird konfiguriert: http.sslcainfo, http.sslBackend schannel"
         & git config --global --unset http.sslverify
         & git config --global http.sslcainfo "$cafile"
         & git config --global http.sslBackend schannel
