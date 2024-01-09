@@ -74,11 +74,15 @@ function ConfigureJava() {
     
     $temurinDir = $env:ProgramFiles + "\Eclipse Adoptium\"
 
-    $temurinJavas = Get-ChildItem -Recurse -Path $temurinDir -Depth 2 -Filter java.exe -File -Name
+    if (Test-Path $temurinDir) {
+        $temurinJavas = Get-ChildItem -Recurse -Path $temurinDir -Depth 2 -Filter java.exe -File -Name
     
-    for($i = 0; $i -le ($temurinJavas.count - 1); $i += 1) {
-        $javaLocation = (get-item ($temurinDir + $temurinJavas[$i])).Directory.Parent.FullName
-        ConfigureJavaInstallation $javaLocation "Eclipse Temurin"
+        for($i = 0; $i -le ($temurinJavas.count - 1); $i += 1) {
+            $javaLocation = (get-item ($temurinDir + $temurinJavas[$i])).Directory.Parent.FullName
+            ConfigureJavaInstallation $javaLocation "Eclipse Temurin"
+        }
+    } else {
+        Write-Warning "$temurinDir absent from both locations"
     }
 }
 
