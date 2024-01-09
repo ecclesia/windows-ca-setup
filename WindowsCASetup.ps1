@@ -81,8 +81,6 @@ function ConfigureJava() {
             $javaLocation = (get-item ($temurinDir + $temurinJavas[$i])).Directory.Parent.FullName
             ConfigureJavaInstallation $javaLocation "Eclipse Temurin"
         }
-    } else {
-        Write-Warning "$temurinDir absent from both locations"
     }
 }
 
