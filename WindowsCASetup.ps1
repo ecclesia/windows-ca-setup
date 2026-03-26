@@ -70,7 +70,6 @@ function ConfigureJava() {
         }
     }
     
-    ConfigureJavaInstallation $env:JAVA_HOME "JAVA_HOME"
     
     $temurinDir = $env:ProgramFiles + "\Eclipse Adoptium\"
 
@@ -82,6 +81,19 @@ function ConfigureJava() {
             ConfigureJavaInstallation $javaLocation "Eclipse Temurin"
         }
     }
+
+    $intelliJDir = $env:ProgramFiles + "\JetBrains\"
+
+    if (Test-Path $intelliJDir) {
+        $intelliJJavas = @(Get-ChildItem -Recurse -Path $intelliJDir -Depth 3 -Filter java.exe -File -Name)
+
+        for($i = 0; $i -le ($intelliJJavas.count - 1); $i += 1) {
+            $javaLocation = (get-item ($intelliJDir + $intelliJJavas[$i])).Directory.Parent.FullName
+            ConfigureJavaInstallation $javaLocation "IntelliJ IDEA"
+        }
+    }
+
+    ConfigureJavaInstallation $env:JAVA_HOME "JAVA_HOME"
 }
 
 function ConfigureJavaInstallation($javaDirectory, $source) {
